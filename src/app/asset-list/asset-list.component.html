@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a href="list" class="nav-link" routerLinkActive="active">Asset List</a>
+        </li>
+        <li class="nav-item">
+            <a href="add" class="nav-link" routerLinkActive="active">Add Asset</a>
+        </li>
+        <li class="nav-item">
+            <button (click)=logout() type="submit">Logout</button>
+        </li>
+    </ul>
+</nav>
+<div>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <th>Asset ID</th>
+            <th>Asset Name</th>
+            <th>Asset Type</th>
+            <th>Asset Class</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ad of assetdef | async | paginate:{itemsPerPage:4,currentPage:p};let i=index">
+                <td>{{ad.ad_id}}</td>
+                <td>{{ad.ad_name}}</td>
+                <td>{{ad.ad_type_id}}</td>
+                <td>{{ad.ad_class}}</td>
+                <button [routerLink]="['/edit',ad.ad_id]" class="btn btn-info">Edit</button>
+                <button (click)="deleteAsset(ad.ad_id)" class="btn btn-danger" style="margin-left: 10px">Delete</button>
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+<div>
+    <pagination-controls (pageChange)="p=$event"></pagination-controls>
+</div>
