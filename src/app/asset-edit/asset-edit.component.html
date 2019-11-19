@@ -1,1 +1,36 @@
-<p>asset-edit works!</p>
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a href="list" class="nav-link" routerLinkActive="active">Product List</a>
+        </li>
+        <li class="nav-item">
+            <a href="add" class="nav-link" routerLinkActive="active">Add Product</a>
+        </li>
+    </ul>
+</nav>
+
+<form [formGroup]="formGroup" (ngSubmit)="updateAsset()">
+    <input type="hidden" #Assetid [(ngModel)]="asset.ad_id" formControlName="ad_id">
+    <div class="form-group">
+        <label for="ad_name">Asset Name</label>
+        <input type="text" #AssetName [(ngModel)]="asset.ad_name" class="form-control" formControlName="ad_name">
+    </div>
+
+    <div class="form-group">
+        <label for="ad_type_id">Asset Type</label>
+        <input type="number" #AssetType [(ngModel)]="asset.ad_type_id" class="form-control"
+            formControlName="ad_type_id">
+    </div>
+
+    <div class="form-group">
+        <label for="ad_class">Asset Class</label>
+        <input type="text" #AssetClass [(ngModel)]="asset.ad_class" class="form-control" formControlName="ad_class">
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Edit</button>
+    </div>
+
+</form>

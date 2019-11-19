@@ -34,13 +34,19 @@ export class LoginComponent implements OnInit {
   logins() {
     console.log(this.loginForm.value);
     this.isSubmitted = true;
-    if (this.loginForm.invalid) {
-      this.toastr.warning("Invalid username and password");
-    }
-    else {
-      this.router.navigateByUrl('/list');
-    }
-
-  }
-
+    this.service.login(this.loginForm.value).subscribe(data=>{data.forEach(element=>{
+      console.log(element["l_id"])
+      localStorage.setItem('user',element["Username"]);
+      if (element["l_id"]==1) {
+        this.router.navigateByUrl('/list');
+        
+      }
+      else {
+        this.toastr.warning("Invalid username and password");
+      }
+  
+  
+    });
+  })
+} 
 }

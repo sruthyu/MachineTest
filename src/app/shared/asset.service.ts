@@ -29,5 +29,9 @@ export class AssetService {
   {
     return this.http.delete(environment.baseUrl+'/assetdef/'+ad_id);
   }
+  updateAsset(ad_id: number,asset: Assetdef)
+  {
+    return this.http.put(environment.baseUrl+'/assetdef/'+ad_id,asset);
+  }
 
 }
