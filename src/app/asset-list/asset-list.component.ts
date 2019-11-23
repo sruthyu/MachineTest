@@ -13,6 +13,7 @@ import { AssetService } from '../shared/asset.service';
   styleUrls: ['./asset-list.component.scss']
 })
 export class AssetListComponent implements OnInit {
+  assetdefs:Assetdef=new Assetdef();
   assetdef: Observable<Assetdef[]>;
   assettype: Observable<Assettype[]>;
 
@@ -24,6 +25,20 @@ export class AssetListComponent implements OnInit {
   }
   list() {
     this.assetdef = this.service.getAssetList();
+  }
+
+  onOptionsSelected(value: number){
+    console.log("the selected value is " + value);
+
+    if(value==0)
+    {
+      this.assetdef = this.service.getAssetList();
+    }
+    else
+    {
+      this.assettype = this.service.getAssettype(value);
+    }
+    
   }
 
   deleteAsset(ad_id: number)

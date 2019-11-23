@@ -21,17 +21,20 @@ export class AssetService {
   getAssetList(): Observable<any> {
     return this.http.get(environment.baseUrl + '/assetdef');
   }
-  addAsset(assetdef:Assetdef)
-  {
-    return this.http.post(environment.baseUrl+'/assetdef',assetdef);
+  getAssettype(id: number): Observable<any> {
+    return this.http.get(environment.baseUrl + '/assettype/' + id);
   }
-  deleteAsset(ad_id: number)
-  {
-    return this.http.delete(environment.baseUrl+'/assetdef/'+ad_id);
+  getAssettypeList(): Observable<any> {
+    return this.http.get(environment.baseUrl + '/assettype');
   }
-  updateAsset(ad_id: number,asset: Assetdef)
-  {
-    return this.http.put(environment.baseUrl+'/assetdef/'+ad_id,asset);
+  addAsset(assetdef: Assetdef) {
+    return this.http.post(environment.baseUrl + '/assetdef', assetdef);
+  }
+  deleteAsset(ad_id: number) {
+    return this.http.delete(environment.baseUrl + '/assetdef/' + ad_id);
+  }
+  updateAsset(ad_id: number, asset: Assetdef) {
+    return this.http.put(environment.baseUrl + '/assetdef/' + ad_id, asset);
   }
 
 }

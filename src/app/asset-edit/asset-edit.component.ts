@@ -4,6 +4,8 @@ import { Assetdef } from '../shared/assetdef';
 import { AssetService } from '../shared/asset.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Assettype } from '../shared/assettype';
 
 @Component({
   selector: 'app-asset-edit',
@@ -13,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 export class AssetEditComponent implements OnInit {
   formGroup: FormGroup;
   asset: Assetdef=new Assetdef();
+  assettype: Observable<Assettype[]>;
 
   constructor(private service:AssetService,private formBuilder: FormBuilder,
     private toastr: ToastrService,private route: ActivatedRoute) { }
@@ -23,9 +26,10 @@ export class AssetEditComponent implements OnInit {
     this.ad_id=this.route.snapshot.params["id"];
     this.formGroup = this.formBuilder.group({
       ad_name: ['', [Validators.required]],
-      ad_type_id: null,
+      ad_type_id:['', [Validators.required]],
       ad_class: ['', [Validators.required]]
     });
+    this.assettype=this.service.getAssettypeList();
 
     console.log("AssetID: "+this.ad_id);
     this.service.getAsset(this.ad_id).subscribe(data=>{

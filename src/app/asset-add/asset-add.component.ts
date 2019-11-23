@@ -5,6 +5,8 @@ import { AssetService } from '../shared/asset.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { Assetdef } from '../shared/assetdef';
+import { Observable } from 'rxjs';
+import { Assettype } from '../shared/assettype';
 
 @Component({
   selector: 'app-asset-add',
@@ -15,24 +17,46 @@ export class AssetAddComponent implements OnInit {
   formGroup: FormGroup;
   isSubmitted = false;
   asset: Assetdef = new Assetdef();
+
+  assettype: Observable<Assettype[]>;
+  assettypes: Assettype=new Assettype();
+
   constructor(private http: HttpClient, private router: Router, private service: AssetService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService) { }
 
   ngOnInit() {
+    
     this.formGroup = this.formBuilder.group({
       ad_name: ['', [Validators.required]],
-      ad_type_id: null,
+      ad_type_id: ['', [Validators.required]],
       ad_class: ['', [Validators.required]]
     });
+    this.populateAssetType();
   }
   get formControls() {
     return this.formGroup.controls;
   }
 
-  addAsset() {
-    //this.isSubmitted = true;
+  populateAssetType(){
+    this.service.getAssettypeList().subscribe(data=>{
+      //console.log(data)
+      //this.assettype=data;
+      data.forEach(element => {
+        this.assettypes.at_id=element['at_id'];
+        this.assettypes.at_name=element['at_name'];
+        console.log(this.assettypes)
+       
+      });
+      
+    });
+     
+    
+  }
 
+  addAsset() {
+
+    this.isSubmitted = true;
     if (this.formGroup.invalid) {
       return;
     }
@@ -44,7 +68,7 @@ export class AssetAddComponent implements OnInit {
     this.toastr.success('Yayy!!', 'Asset added successfully');
 
     console.log(this.formGroup.value);
-    this.isSubmitted = true;
+
   }
 
   logout() {
